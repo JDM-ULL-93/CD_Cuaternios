@@ -5,13 +5,16 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{0d629951-fec3-4d9f-af96-1a98bd204a1c}</ProjectGuid>
     <ProjectHome />
-    <StartupFile>cd4_cuaternion.py</StartupFile>
+    <StartupFile>cdX_cuaternion.py</StartupFile>
     <SearchPath />
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
     <InterpreterId />
+    <CommandLineArguments>500</CommandLineArguments>
+    <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
+    <IsWindowsApplication>False</IsWindowsApplication>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
@@ -24,6 +27,7 @@
     <Compile Include="cd3_cuaternion.py" />
     <Compile Include="cd4_cuaternion.py" />
     <Compile Include="cd5_cuaternion.py" />
+    <Compile Include="cdX_cuaternion.py" />
     <Compile Include="Classes.py" />
     <Compile Include="Funcs.py" />
   </ItemGroup>

@@ -96,30 +96,34 @@ o0=Quaternion(0,0,0,0)
 # calculo del punto o1
 o1 = q1 * r1 * q1c #3 2*1*y +1 = 3
 
+multp = q1 * q2
+multp_c =  q2c * q1c
 # calculo del punto o2
-multp = (q1 *q2) #multiplicatorio
-multp_C = (q2c * q1c)
-o2 = multp * r2 * multp_C + o1 #2*2*y +1
+o2 = multp * r2 * multp_c + o1 #2*2*y +1
 
-# calculo del punto o3
 multp = multp * q3
-multp_C = q3c * multp_C
-o3 = multp * r3 * multp_C + o2 #  2*3*y +1
+multp_c = q3c * multp_c
+# calculo del punto o3
+o3 = multp * r3 * multp_c + o2 #  2*3*y +1
 
+multp = multp * q4
+multp_c = q4c * multp_c
 # calculo del punto o4
-o4 = (q1 * q2 * q3 * q4) * r4 * (q4c * q3c * q2c * q1c) + o3 # 2*4*y +1
+o4 = multp * r4 * multp_c + o3 # 2*4*y +1
 
+multp = multp * q5
+multp_c = q5c * multp_c
 # calculo del punto o5A
-o5A = (q1 * q2 * q3 * q4 * q5) * r5A * (q5c * q4c * q3c * q2c * q1c) + o4 # 2*5*y +1
-
-# calculo del punto o6A
-o6A = (q1 * q2 * q3 * q4 * q5 * q6) * r6 * (q6c * q5c * q4c * q3c * q2c * q1c) + o5A
-
+o5A = multp * r5A * multp_c + o4 # 2*5*y +1
 # calculo del punto o5B
-o5B = (q1 * q2 * q3 * q4 * q5) * r5B * (q5c * q4c * q3c * q2c * q1c) + o4
+o5B = multp * r5B * multp_c + o4
 
+multp = multp * q6
+multp = q6c * multp
+# calculo del punto o6A
+o6A = multp * r6 * q6c * multp_c + o5A
 # calculo del punto o6B
-o6B = (q1 * q2 * q3 * q4 * q5 * q6) * r6 * (q6c * q5c * q4c * q3c * q2c * q1c) + o5B
+o6B = multp * r6 * q6c * multp_c + o5B
 
 o0A=o0.toList()
 o1A=o1.toList()

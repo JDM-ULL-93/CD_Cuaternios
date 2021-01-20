@@ -39,7 +39,7 @@ class Quaternion:
             1: self.x, #case 2
             2: self.y,
             3: self.z
-        }.get(key, float('inf'))  #default: -1
+        }.get(key, float('inf'))  #default: inf
 
     def toList(self, decimals = 2):
         return [ round(self.x, decimals), round(self.y, decimals), round(self.z, decimals), round(self.w, decimals)]

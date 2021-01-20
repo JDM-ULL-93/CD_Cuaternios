@@ -79,7 +79,7 @@ q5Bc = ~q5B
 ### Calculo coordenadas de cada origen:
 o0=Quaternion(0,0,0,0)
 # calculo del punto o1
-o1 = q1 * r1 * q1c
+o1 = q1 * r1 * q1c 
 
 # calculo del punto o2
 o2 = (q1 *q2) * r2 * (q2c * q1c) + o1
