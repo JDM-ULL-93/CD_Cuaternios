@@ -1,80 +1,65 @@
 # -*- coding: utf-8 -*-
-from math import * #Para pi
+import numpy as np
 
-from Classes import Quaternion
-from Funcs import muestra_robot
-# resoluci?n de la cinem?tica directa mediante cuaterniones
+from Class import Quaternion
+from Funcs import muestra_robot, shows_origins
 
-# o1=Q1*(0,r1)*Q1c
-# o2=Q1*Q2*(0,r2)*Q2c*Q1c + o1
+# ------ 1º articulación: Rotación --------
+t1 = float(input('Valor de theta1 en grados: '))
+t1 = np.radians(t1)
+a1 = 5
 
-## INTRODUCCIÖN VARIABLES
-# parametros primer eslabón
-a1=5
-t1=float(input('valor de theta1 en grados  '))
-t1=t1*pi/180
-# parametro segundo eslabón
-l2=float(input('valor de Longitud2 en m  '))
+r1 = Quaternion(0, 0, 0, a1)
+
+n1 = [0, 0, 1]
+q1 = Quaternion.VectorRotacional(n1, t1)
+
+q1c = ~q1
+
+
+# ------ 2º articulación: Desplazamiento --------
+l2 = float(input('Valor de Longitud2 en metros: '))
 t2 = 0
-# parametro tercer eslabón
+
+r2 = Quaternion(0, l2, 0, 0)
+
+n2 = [1, 0, 0]
+q2 = Quaternion.VectorRotacional(n2, t2)
+
+q2c = ~q2
+
+
+# ------ 3º articulación: Rotación --------
+t3 = float(input('Valor de theta3 en grados: '))
+t3 = np.radians(t3)
 a3 = 2
-t3 = float(input('valor de theta3 en grados  '))
-t3=t3*pi/180
 
-## DEFINICIÓN VARIABLES
-# cuaterniones de desplazamiento
-r1 = Quaternion(0,0,0,a1)
-r2 = Quaternion(0,l2,0,0)
-r3 = Quaternion(0,a3,0,0)
+r3 = Quaternion(0, a3, 0, 0)
 
-# vectores de rotación
-n1=[0,0,1]
-n2=[0,0,0]
-n3=[0,-1,0]
+n3 = [0, -1, 0]
+q3 = Quaternion.VectorRotacional(n3, t3)
 
-# calculo de los cuaterniones de rotación
-q1 = Quaternion.VectorRotacional(n1,t1)
-q1c= ~q1 #q1 conjugado
+q3c = ~q3
 
-q2=Quaternion.VectorRotacional(n2,t2) 
-q2c=~q2
 
-q3=Quaternion.VectorRotacional(n3,t3) 
-q3c=~q3
 
-o0=Quaternion(0,0,0,0)
-# calculo del punto o1
+# ------ Cálculo de las articulaciones --------
+o0 = Quaternion(0, 0, 0, 0)
 o1 = q1 * r1 * q1c
-o1A=o1.toList()
-
-# calculo del punto o2
-o2 = (q1 *q2) * r2 * (q2c * q1c) + o1
-#i2 = q1 * q2 * r2 * q2c * q1c
-#o2 = o1 + i2
-o2A=o2.toList()
-
-# calculo del punto o3
+o2 = (q1 * q2) * r2 * (q2c * q1c) + o1
 o3 = (q1 * q2 * q3) * r3 * (q3c * q2c * q1c) + o2
-#i3 = q1 * q2 * q3 * r2 * r3 * q3c * q2c * q1c
-#o3 = o2 + i3
-o3A=o3.toList()
 
 
-o0A=o0.toList()
-o1A=o1.toList()
-o2A=o2.toList()
-o3A=o3.toList()
-# impresi?n de los resultados
-print('')
-print('punto uno del robot')
-print(o0A)
-print('punto uno del robot')
-print(o1A)
-print('punto dos del robot')
-print(o2A)
-print('punto tres del robot')
-print(o3A)
-muestra_robot([o0A,o1A,o2A,o3A ])
+# ------ Articulaciones como lista --------
+o0A = o0.toList()
+o1A = o1.toList()
+o2A = o2.toList()
+o3A = o3.toList()
+
+# ------ Resultados --------
+shows_origins([o0A, o1A, o2A, o3A])
+muestra_robot([o0A, o1A, o2A, o3A])
+
 
 
 

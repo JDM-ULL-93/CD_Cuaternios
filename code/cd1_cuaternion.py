@@ -1,71 +1,54 @@
 # -*- coding: utf-8 -*-
-from math import * #Para pi
+import numpy as np
 
-from Classes import Quaternion
-from Funcs import muestra_robot
-# resoluci?n de la cinem?tica directa mediante cuaterniones
+from Class import Quaternion
+from Funcs import muestra_robot, shows_origins
 
-# o1=Q1*(0,r1)*Q1c
-# o2=Q1*Q2*(0,r2)*Q2c*Q1c + o1
+# ------ 1º articulación: Rotación --------
+# Longitud y ángulo
+t1 = float(input('Valor de theta1 en grados: '))
+t1 = np.radians(t1)
+a1 = 10
 
-### INTRODUCCIÓN PARAMETROS (constantes + variables)
-##  PARAMETROS 1º ESLABÓN
 # Traslación
-a1=10
-r1 = Quaternion(0,a1,0,0) # cuaterniones de desplazamiento (Cuaternion puro)
-#Rotación 
-t1=float(input('valor de theta1 en grados  '))
-t1=t1*pi/180
-n1=[0,0,1]# vector de rotación
-q1 = Quaternion.VectorRotacional(n1,t1) #cuaternion de rotación
-q1c= ~q1 #q1 conjugado
+r1 = Quaternion(0, a1, 0, 0)
+
+# Rotación 
+n1 = [0, 0, 1]
+q1 = Quaternion.VectorRotacional(n1, t1)
+
+# Conjugado
+q1c = ~q1
 
 
 
-##  PARAMETROS 2º ESLABÓN
-# Traslación
-a2=5
-r2 = Quaternion(0,a2,0,0)
-# Rotación
-t2=float(input('valor de theta2 en grados  '))
-t2=t2*pi/180
-n2=[0,0,1]
+# ------ 2º articulación: Rotación --------
+t2 =float(input('Valor de theta2 en grados  '))
+t2 = np.radians(t2)
+a2 = 5
 
-q2=Quaternion.VectorRotacional(n2,t2) 
-q2c=~q2
+r2 = Quaternion(0, a2, 0, 0)
 
+n2=[0, 0, 1]
+q2=Quaternion.VectorRotacional(n2, t2) 
 
-
-# introducción de las variables articulares
-print('')
+q2c = ~q2
 
 
-
-
-# calculo de los cuaterniones de rotación
-
-
-
-o0 = Quaternion(0,0,0,0)
-o0A = o0.toList()
-# calculo del punto o1
+# ------ Cálculo de las articulaciones --------
+o0 = Quaternion(0, 0, 0, 0)
 o1 = q1 * r1 * q1c
-o1A=o1.toList()
-
-# calculo del punto o2
-o2 = q1 *q2 * r2 * q2c * q1c + o1
-o2A= o2.toList()
+o2 = (q1 * q2) * r2 * (q2c * q1c) + o1
 
 
-# impresi?n de los resultados
-print('')
-print('punto uno del robot')
-print(o1A)
-print('')
-print('punto dos del robot')
-print(o2A)
+# ------ Articulaciones como lista --------
+o0A = o0.toList()
+o1A = o1.toList()
+o2A = o2.toList()
 
-muestra_robot([o0A,o1A,o2A ])
+# ------ Resultados --------
+shows_origins([o0A, o1A, o2A])
+muestra_robot([o0A, o1A, o2A])
 
 
 

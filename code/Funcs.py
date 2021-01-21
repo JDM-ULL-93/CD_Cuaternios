@@ -46,3 +46,35 @@ def muestra_robot(O,ef=[]):
   ax.set_zlabel('Z')
   plt.show(block=True)
   return
+
+
+# # Muestra los orígenes de coordenadas para cada articulación
+# def shows_origins(origins):
+#   print('Orígenes de coordenadas: \n')
+
+#   for index in range(len(origins)):
+#     point = origins[index]
+#     if isinstance(point ,list):
+#     point = '(O' + str(index) + ')0'
+#     value = str(origins[index])
+
+#     print(point + '\t = ' + value)
+
+def arbol_origenes(O,base=0,sufijo=''):
+  # Da formato a los origenes de coordenadas para mostrarlos por pantalla
+  if isinstance(O[0],list):
+    for i in range(len(O)):
+      if isinstance(O[i][0],list):
+        for j in range(len(O[i])):
+          arbol_origenes(O[i][j],i+base,sufijo+str(j+1))
+      else:
+        print('(O'+str(i+base)+sufijo+')0\t= '+str([round(j,3) for j in O[i]]))
+  else:
+    print('(O'+str(base)+sufijo+')0\t= '+str([round(j,3) for j in O]))
+
+def shows_origins(O,final=0):
+  # Muestra los orígenes de coordenadas para cada articulación
+  print('Orígenes de coordenadas:')
+  arbol_origenes(O)
+  if final:
+    print('E.Final = '+str([round(j,3) for j in final]))

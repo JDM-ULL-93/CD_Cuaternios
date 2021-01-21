@@ -1,8 +1,21 @@
 # -*- coding: utf-8 -*-
+import numpy as np
 from math import * #Para pi
 
-from Classes import Quaternion
-from Funcs import muestra_robot
+from Class import Quaternion
+from Funcs import muestra_robot, shows_origins
+
+# ------ 1º articulación: Desplazamiento --------
+l1 = float(input('Valor de longitud1 en metros: '))
+t1 = 0
+
+r0p = Quaternion(0, 0, 0, l1)
+
+n0p = [0, 0, 1]
+q0p = Quaternion.VectorRotacional(n0p, t1)
+
+q0pc = ~q0p
+
 # resoluci?n de la cinem?tica directa mediante cuaterniones
 
 # o1=Q1*(0,r1)*Q1c
@@ -11,12 +24,11 @@ from Funcs import muestra_robot
 ### INTRODUCCIÓN PARAMETROS (constantes + variables)
 ##  PARAMETROS 1º ESLABÓN
 #   Traslación
-l1=float(input('valor de longitud1 en cm  '))
-a1=2
-r1 = Quaternion(0,a1,0,l1)
+a1 = 2
+r1 = Quaternion(0, a1, 0, 0)
 #   Rotación
-t1=0
-n1=[0,0,0]
+t1=np.radians(90)
+n1=[1,0,0]
 q1 = Quaternion.VectorRotacional(n1,t1)
 q1c = ~q1
 
@@ -86,6 +98,8 @@ q6c = ~q6
 ### Calculo coordenadas de cada origen:
 o0=Quaternion(0,0,0,0)
 
+o1 = q0p * r0p * q0pc #3 2*1*y +1 = 3
+
 ##Complejidad(Tn) : (2*x*y* + 1)n  . 
 #Donde:
 #       x = nº eslabones que preceden al actual + el actual,
@@ -94,7 +108,7 @@ o0=Quaternion(0,0,0,0)
 # no se aprovechan multiplicaciones previas ya realizadas
 #(un ejemplo de esta optimización se da usando las variables multp y multp_C para o1,o2 y o3)
 # calculo del punto o1
-o1 = q1 * r1 * q1c #3 2*1*y +1 = 3
+o1 = (q0p * q1) * r1 * (q1c * q0pc) #3 2*1*y +1 = 3
 
 # calculo del punto o2
 multp = (q1 *q2) #multiplicatorio
