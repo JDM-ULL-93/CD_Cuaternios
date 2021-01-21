@@ -15,14 +15,11 @@ def temporizador(func):
        return
     return wrapper
 
-pp = int(input('Numero de articulaciones del robot  '))
-
 @temporizador
 def cinDirCuaternion(p):
     aX = [5] * p #aX = [random.randint(5, 10) for i in range(p)]
     tX = [45*pi/180] * p#tX = [random.randint(-360, 360)*pi/180 for i in range(p)]
     nX = [[0,0,1]]*p#nX = [[0,0,random.randint(-1,1)] for i in range(p)]
-
 
     origen = Quaternion(0,0,0,0)
     rX = [Quaternion(0,aX[0],0,0)] * p
@@ -30,14 +27,23 @@ def cinDirCuaternion(p):
     qXc = [~qX[0]]*p
 
    
-    #Con memorizáción, la complejidad del algoritmo es O(N)
-    multp = qX[0]
+    #Con memorizaci?n, la complejidad del algoritmo es O(N)
+    #La memorizaci?n se aprovecha de la propiedad asociativa de los cuaterniones
+    multp = qX[0] 
     multp_C = qXc[0]
     Ox = [multp*rX[0]*multp_C+origen]
+    #OxL = [origen.toList(),Ox[0].toList()]
     for i in range(1,p):
         multp = multp * qX[i]
-        multp_C = qXc[i] * multp_C
+        multp_C = qXc[i] * multp_C 
         Ox.append(multp * rX[i]* multp_C + Ox[i-1])
+        #OxL.append(Ox[-1].toList())
+    #muestra_robot(OxL)
     return Ox
 
-cinDirCuaternion(pp)
+#pp = int(input('Numero de articulaciones del robot  '))
+#cinDirCuaternion(pp)
+
+nA = [10000000]#[10, 100, 1000, 10000, 100000, 1000000]
+for n in nA:
+    cinDirCuaternion(n)

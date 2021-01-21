@@ -28,6 +28,7 @@
     <Compile Include="cd4_cuaternion.py" />
     <Compile Include="cd5_cuaternion.py" />
     <Compile Include="cdX_cuaternion.py" />
+    <Compile Include="cin_dir_x.py" />
     <Compile Include="Classes.py" />
     <Compile Include="Funcs.py" />
   </ItemGroup>

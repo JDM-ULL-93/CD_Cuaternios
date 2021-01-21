@@ -105,37 +105,50 @@ def temporizador(func):
     return wrapper
 # ******************************************************************************
 
-plt.ion() # Modo interactivo
-# Introducción de los valores de las articulaciones
-nvar=2 # Número de variables
-if len(sys.argv) != nvar:
-  sys.exit('El número de articulaciones no es el correcto ('+str(nvar)+')')
-pp=int(sys.argv[1])
+
+
+
+#pp = int(input('Numero de articulaciones del robot  '))
+#cinDirMatrices(pp)
+
 
 # Calcula el tiempo de recrear X puntos de X articulaciones con matrices
 @temporizador
-def cinDirMatrices(p):
-  # Parámetros D-H:
-  #        1    2
-  d  = [0] * p
-  th = [45] * p
-  a  = [5] * p
-  al = [0] * p
+def cinDirMatrices(num):
+    # Parámetros D-H:
+    #        1    2
+    d  = [0] * num
+    th = [45] * num
+    a  = [5] * num
+    al = [0] * num
+
+    # Orígenes para cada articulación
+    origen = [0, 0, 0, 1]
+    TX_Y = [matriz_T(d[i], th[i], a[i], al[i]) for i in range(num)] #Donde Y = X-1
+    
+    #Sin memorización --> O(n^2)
+    #TX_Yalreves = TX_Y[::-1]
+    #resultado = [[0, 0, 0, 1], np.dot(TX_Y[0], origen).tolist()]
+    #for i in range(1,p):
+        #res = reduce(lambda a, b: np.dot(a, b), TX_Yalreves[:i])
+        #resultado.append(np.dot(res, origen).tolist())
+
+    #Con memorización --> O(n)
+    resultado = [[0, 0, 0, 1]]
+    multp = TX_Y[0]
+    for i in range(0, num-1):
+        resultado.append(np.dot(multp, origen))
+        multp = np.dot(multp,TX_Y[i+1]) 
+    # Mostrar resultado de la cinemática directa
+    #muestra_origenes(resultado)
+    #muestra_robot   (resultado)
+    return
 
 
-  # Orígenes para cada articulación
-  origen = [0, 0, 0, 1]
-  T0X = [matriz_T(d[i], th[i], a[i], al[i]) for i in range(p)]
-  T0Xalreves = T0X[::-1]
-  resultado = [[0, 0, 0, 1], np.dot(T0X[0], origen).tolist()]
+nA = [10, 100, 1000, 10000, 100000, 1000000]
+for n in nA:
+    cinDirMatrices(n)
 
-  for i in range(1, p):
-      res = reduce(lambda a, b: np.dot(a, b), T0Xalreves[:i])
-      resultado.append(np.dot(res, origen).tolist())
-# Mostrar resultado de la cinemática directa
-# muestra_origenes(resultado)
-# muestra_robot   (resultado)
-# input()
 
-cinDirMatrices(pp)
+
 
