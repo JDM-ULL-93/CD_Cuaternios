@@ -2,8 +2,8 @@
 from math import * #Para pi
 import time
 import random
-from Classes import Quaternion
-from Funcs import muestra_robot
+from classes import Quaternion
+from utils import show_robot
 
 def temporizador(func):
     def wrapper(args):
@@ -23,7 +23,7 @@ def cinDirCuaternion(p):
 
     origen = Quaternion(0,0,0,0)
     rX = [Quaternion(0,aX[0],0,0)] * p
-    qX = [Quaternion.VectorRotacional(nX[0],tX[0])] * p
+    qX = [Quaternion.rotationalVector(nX[0],tX[0])] * p
     qXc = [~qX[0]]*p
 
    
