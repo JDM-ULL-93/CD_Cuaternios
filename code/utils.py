@@ -17,7 +17,7 @@ def ramal(I,prev=[],base=0):
         O.append(prev)
   return O
 
-def muestra_robot(O,ef=[]):
+def show_robot(O,ef=[]):
   # Pinta en 3D
   OR = ramal(O)
   OT = np.array(OR).T
@@ -48,18 +48,6 @@ def muestra_robot(O,ef=[]):
   return
 
 
-# # Muestra los orígenes de coordenadas para cada articulación
-# def shows_origins(origins):
-#   print('Orígenes de coordenadas: \n')
-
-#   for index in range(len(origins)):
-#     point = origins[index]
-#     if isinstance(point ,list):
-#     point = '(O' + str(index) + ')0'
-#     value = str(origins[index])
-
-#     print(point + '\t = ' + value)
-
 def arbol_origenes(O,base=0,sufijo=''):
   # Da formato a los origenes de coordenadas para mostrarlos por pantalla
   if isinstance(O[0],list):
@@ -73,6 +61,7 @@ def arbol_origenes(O,base=0,sufijo=''):
     print('(O'+str(base)+sufijo+')0\t= '+str([round(j,3) for j in O]))
 
 def shows_origins(O,final=0):
+  print(O)
   # Muestra los orígenes de coordenadas para cada articulación
   print('Orígenes de coordenadas:')
   arbol_origenes(O)

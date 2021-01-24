@@ -34,7 +34,7 @@ def ramal(I,prev=[],base=0):
         O.append(prev)
   return O
 
-def muestra_robot(O,ef=[]):
+def show_robot(O,ef=[]):
   # Pinta en 3D
   OR = ramal(O)
   OT = np.array(OR).T

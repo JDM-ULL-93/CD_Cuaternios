@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import numpy as np
 
-from Class import Quaternion
-from Funcs import muestra_robot, shows_origins
+from classes import Quaternion
+from utils import show_robot, shows_origins
 
 # ------ 1º articulación: Rotación --------
 # Longitud y ángulo
@@ -15,7 +15,7 @@ r1 = Quaternion(0, a1, 0, 0)
 
 # Rotación 
 n1 = [0, 0, 1]
-q1 = Quaternion.VectorRotacional(n1, t1)
+q1 = Quaternion.rotationalVector(n1, t1)
 
 # Conjugado
 q1c = ~q1
@@ -30,7 +30,7 @@ a2 = 5
 r2 = Quaternion(0, a2, 0, 0)
 
 n2=[0, 0, 1]
-q2=Quaternion.VectorRotacional(n2, t2) 
+q2=Quaternion.rotationalVector(n2, t2) 
 
 q2c = ~q2
 
@@ -42,17 +42,10 @@ o2 = (q1 * q2) * r2 * (q2c * q1c) + o1
 
 
 # ------ Articulaciones como lista --------
-o0A = o0.toList()
-o1A = o1.toList()
-o2A = o2.toList()
+o0_0 = o0.toList()
+o1_0 = o1.toList()
+o2_0 = o2.toList()
 
 # ------ Resultados --------
-shows_origins([o0A, o1A, o2A])
-muestra_robot([o0A, o1A, o2A])
-
-
-
-
-
-
-
+shows_origins([ o0_0, o1_0, o2_0 ])
+show_robot([ o0_0, o1_0, o2_0 ])

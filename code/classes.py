@@ -56,7 +56,7 @@ class Quaternion:
   # vector: Vector unitario sobre el que se gira
   # theta: Radianes que se gira
   @staticmethod
-  def VectorRotacional(vector, theta): 
+  def rotationalVector(vector, theta): 
     halfThetha = theta / 2
     sin_halfTheta = math.sin(halfThetha)
 

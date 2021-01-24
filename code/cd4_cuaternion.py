@@ -1,180 +1,162 @@
 # -*- coding: utf-8 -*-
 import numpy as np
-from math import * #Para pi
 
-from Class import Quaternion
-from Funcs import muestra_robot, shows_origins
+import sys
+from classes import Quaternion
+from utils import show_robot, shows_origins
 
-# ------ 1º articulación: Desplazamiento --------
-l1 = float(input('Valor de longitud1 en metros: '))
-t1 = 0
+# ------ Variables ------
 
-r0p = Quaternion(0, 0, 0, l1)
+# Número de variables
+number_var = 6 
+if len(sys.argv) != number_var + 1:
+  sys.exit('El número de articulaciones no es el correcto (' + str(number_var) + ')')
 
-n0p = [0, 0, 1]
-q0p = Quaternion.VectorRotacional(n0p, t1)
 
-q0pc = ~q0p
+variable = [float(i) for i in sys.argv[1 : number_var + 1]]
 
-# resoluci?n de la cinem?tica directa mediante cuaterniones
+l1 = variable[0]
+t2 = np.radians(variable[1])
+t3 = np.radians(variable[2])
+t4 = np.radians(variable[3])
+l5 = variable[4]
+l6 = variable[5]
 
-# o1=Q1*(0,r1)*Q1c
-# o2=Q1*Q2*(0,r2)*Q2c*Q1c + o1
 
-### INTRODUCCIÓN PARAMETROS (constantes + variables)
-##  PARAMETROS 1º ESLABÓN
-#   Traslación
-a1 = 2
-r1 = Quaternion(0, a1, 0, 0)
-#   Rotación
-t1=np.radians(90)
-n1=[1,0,0]
-q1 = Quaternion.VectorRotacional(n1,t1)
+# ------ Traslación ------
+r0P = Quaternion(0, 0, 0, l1)
+r1 = Quaternion(0, 2, 0, 0)
+r2 = Quaternion(0, 2, 0, 0)
+r3 = Quaternion(0, 0, 0, 0)
+r4 = Quaternion(0, 5, 0, 0)
+
+r4A = Quaternion(0, 0, 0, l5)
+r5A = Quaternion(0, 1, 0, 0)
+r6A = Quaternion(0, l6, 0, 0)
+
+r4B = Quaternion(0, 0, 0, -l5)
+r5B = Quaternion(0, 1, 0, 0)
+r6B = Quaternion(0, l6, 0, 0)
+
+rEF = Quaternion(0, 1 + l6, 0, 0)
+
+
+# ------ Rotación ------
+
+# Eje de giro
+n0P = [0, 0, 1]
+n1 = [1, 0, 0]
+n2 = [0, 0, 1]
+n3 = [0, -1, 0]
+n4 = [1, 0, 0]
+
+n4A = [0, 0, 1]
+n5A = [1, 0, 0]
+n6A = [1, 0, 0]
+
+n4B = [0, 0, -1]
+n5B = [1, 0, 0]
+n6B = [1, 0, 0]
+
+nEF = [1, 0, 0]
+
+# Cuaternión
+q0P = Quaternion.rotationalVector(n0P, 0)
+q1 = Quaternion.rotationalVector(n1, 0)
+q2 = Quaternion.rotationalVector(n2, t2)
+q3 = Quaternion.rotationalVector(n3, t3)
+q4 = Quaternion.rotationalVector(n4, t4)
+
+q4A = Quaternion.rotationalVector(n4A, 0)
+q5A = Quaternion.rotationalVector(n5A, 0)
+q6A = Quaternion.rotationalVector(n6A, 0)
+
+q4B = Quaternion.rotationalVector(n4B, 0)
+q5B = Quaternion.rotationalVector(n5B, 0)
+q6B = Quaternion.rotationalVector(n6B, 0)
+
+qEF = Quaternion.rotationalVector(nEF, 0)
+
+
+# ------ Inverso ------
+q0Pc = ~q0P
 q1c = ~q1
-
-
-
-##  PARAMETROS 2º ESLABÓN
-#   Traslación
-a2=2
-r2 = Quaternion(0,a2,0,0)
-#   Rotación
-t2=float(input('valor de theta2 en grados  '))
-t2=t2*pi/180
-n2=[0,0,1]
-q2 = Quaternion.VectorRotacional(n2,t2) #Cuaternion de rotación
 q2c = ~q2
-
-
-
-##  PARAMETROS 3º ESLABÓN
-#   Traslación
-a3=0
-r3 = Quaternion(0,a3,0,0)
-#   Rotación
-t3=float(input('valor de theta3 en grados  '))
-t3=t3*pi/180
-n3=[0,-1,0]
-q3 = Quaternion.VectorRotacional(n3,t3)
 q3c = ~q3
-
-
-
-##  PARAMETROS 4º ESLABÓN
-#   Traslación
-a4=5
-r4 = Quaternion(0,a4,0,0)
-#   Rotación
-t4=float(input('valor de theta4 en grados  '))
-t4=t4*pi/180
-n4=[1,0,0]
-q4 = Quaternion.VectorRotacional(n4,t4)
 q4c = ~q4
 
+q4Ac = ~q4A
+q5Ac = ~q5A
+q6Ac = ~q6A
+
+q4Bc = ~q4B
+q5Bc = ~q5B
+q6Bc = ~q6B
+
+qEFc = ~qEF
+
+# # ------ Cálculo de rotaciones acumuladas ------
+# q0P_q1 = q0P * q1
+# q0P_q2 = q0P_q1 * q2
+# q0P_q3 = q0P_q2 * q3
+# q0P_q4 = q0P_q3 * q4
+
+# q0P_q4A = q0P_q4 * q4A
+# q0P_q5A = q0P_q4A * q5A
+# q0P_q6A = q0P_q5A * q6A
+
+# q0P_q4B = q0P_q4 * q4B
+# q0P_q5B = q0P_q4B * q5B
+# q0P_q6B = q0P_q5B * q6B
+
+# q0P_qEF = q0P_q4 * qEF
 
 
-##  PARAMETROS los dos 5º ESLABÓNes
-#   Traslación
-a5=1
-l5=float(input('valor de longitud5 en cm  '))
-r5A=Quaternion(0,a5,0,l5)
-r5B=Quaternion(0,a5,0,-l5)
-#   Rotación
-t5=0
-n5=[0,0,0]
-q5 =  Quaternion.VectorRotacional(n5,t5)
-q5c = ~q5
-##  PARAMETROS los dos 6º ESLABÓNes(diferencia solo en calculo)
-#   Traslación
-l6=float(input('valor de longitud6 en cm  '))
-r6=Quaternion(0,l6,0,0)
-#   Rotación
-t6=0
-n6=[0,0,0]
-q6 =  Quaternion.VectorRotacional(n6,t6)
-q6c = ~q6
+# ------ Cálculo de las articulaciones --------
+o0 = Quaternion(0, 0, 0, 0)
+o0P = q0P * r0P * q0Pc
+o1 = (q0P * q1) * r1 * (q1c * q0Pc) + o0P
+o2 = (q0P * q1 * q2) * r2 * (q2c * q1c * q0Pc) + o1
+o3 = (q0P * q1 * q2 * q3) * r3 * (q3c * q2c * q1c * q0Pc) + o2
+o4 = (q0P * q1 * q2 * q3 * q4) * r4 * (q4c * q3c * q2c * q1c * q0Pc) + o3
+
+o4A = (q0P * q1 * q2 * q3 * q4 * q4A) * r4A * (q4Ac * q4c * q3c * q2c * q1c * q0Pc) + o4
+o5A = (q0P * q1 * q2 * q3 * q4 * q4A * q5A) * r5A * (q5Ac * q4Ac * q4c * q3c * q2c * q1c * q0Pc) + o4A
+o6A = (q0P * q1 * q2 * q3 * q4 * q4A * q6A) * r6A * (q6Ac * q5Ac * q4Ac * q4c * q3c * q2c * q1c * q0Pc) + o5A
+
+o4B = (q0P * q1 * q2 * q3 * q4 * q4B) * r4B * (q4Bc * q4c * q3c * q2c * q1c * q0Pc) + o4
+o5B = (q0P * q1 * q2 * q3 * q4 * q4B * q5B) * r5B * (q5Bc * q4Bc * q4c * q3c * q2c * q1c * q0Pc) + o4B
+o6B = (q0P * q1 * q2 * q3 * q4 * q4B * q6B) * r6B * (q6Bc * q5Bc * q4Bc * q4c * q3c * q2c * q1c * q0Pc) + o5B
+
+oEF = (q0P * q1 * q2 * q3 * q4 * qEF) * rEF * (qEFc * q4c * q3c * q2c * q1c * q0Pc) + o4
 
 
-### Calculo coordenadas de cada origen:
-o0=Quaternion(0,0,0,0)
+# ------ Articulaciones como lista --------
 
-o1 = q0p * r0p * q0pc #3 2*1*y +1 = 3
+o0_0 = o0.toList() 
+o0P_0 = o0P.toList() 
+o1_0 = o1.toList() 
+o2_0 = o2.toList() 
+o3_0 = o3.toList() 
+o4_0 = o4.toList() 
 
-##Complejidad(Tn) : (2*x*y* + 1)n  . 
-#Donde:
-#       x = nº eslabones que preceden al actual + el actual,
-#       y = 16 = multiplicaciones y sumas intrinsecas en multiplicación cuaterniones
-# Conviene destacar que se puede optimizar, por ejemplo: 
-# no se aprovechan multiplicaciones previas ya realizadas
-#(un ejemplo de esta optimización se da usando las variables multp y multp_C para o1,o2 y o3)
-# calculo del punto o1
-o1 = (q0p * q1) * r1 * (q1c * q0pc) #3 2*1*y +1 = 3
+o4A_0 = o4A.toList() 
+o5A_0 = o5A.toList() 
+o6A_0 = o6A.toList() 
 
-# calculo del punto o2
-multp = (q1 *q2) #multiplicatorio
-multp_C = (q2c * q1c)
-o2 = multp * r2 * multp_C + o1 #2*2*y +1
+o4B_0 = o4B.toList() 
+o5B_0 = o5B.toList() 
+o6B_0 = o6B.toList() 
 
-# calculo del punto o3
-multp = multp * q3
-multp_C = q3c * multp_C
-o3 = multp * r3 * multp_C + o2 #  2*3*y +1
+oEF_0 = oEF.toList() 
 
-# calculo del punto o4
-o4 = (q1 * q2 * q3 * q4) * r4 * (q4c * q3c * q2c * q1c) + o3 # 2*4*y +1
 
-# calculo del punto o5A
-o5A = (q1 * q2 * q3 * q4 * q5) * r5A * (q5c * q4c * q3c * q2c * q1c) + o4 # 2*5*y +1
+# ------ Resultados --------
+shows_origins([ o0_0, o1_0, o2_0, o3_0, o4_0, [[o5A_0, o6A_0], [o5B_0, o6B_0]] ], oEF_0)
+show_robot([ o0_0, o0P_0, o1_0, o2_0, o3_0, o4_0, [[o4A_0, o5A_0, o6A_0], [o4B_0, o5B_0, o6B_0]] ], oEF_0)
 
-# calculo del punto o6A
-o6A = (q1 * q2 * q3 * q4 * q5 * q6) * r6 * (q6c * q5c * q4c * q3c * q2c * q1c) + o5A
-
-# calculo del punto o5B
-o5B = (q1 * q2 * q3 * q4 * q5) * r5B * (q5c * q4c * q3c * q2c * q1c) + o4
-
-# calculo del punto o6B
-o6B = (q1 * q2 * q3 * q4 * q5 * q6) * r6 * (q6c * q5c * q4c * q3c * q2c * q1c) + o5B
-
-o0A=o0.toList()
-o1A=o1.toList()
-o2A=o2.toList()
-o3A=o3.toList()
-o4A=o4.toList()
-o5A_A=o5A.toList()
-o5B_A=o5B.toList()
-o6A_A=o6A.toList()
-o6B_A=o6B.toList()
-# impresi?n de los resultados
-print('')
-print('punto 0 del robot')
-print(o0A)
-print('punto 1 del robot')
-print(o1A)
-print('punto 2 del robot')
-print(o2A)
-print('punto 3 del robot')
-print(o3A)
-print('punto 4 del robot')
-print(o4A)
-print('punto 5_a del robot')
-print(o5A_A)
-print('punto 6_a del robot')
-print(o6A_A)
-print('punto 5_b del robot')
-print(o5B_A)
-print('punto 6_b del robot')
-print(o6B_A)
-
-muestra_robot([o0A,o1A,o2A,o3A,o4A, [[o5A_A,o6A_A],[o5B_A,o6B_A]] ])
-#La visualización del resultado difiere un poco del real porque para 
-#mantener el problema simple, no se han añadido puntos para dividir 
-#las diferentes componentes del vector translación r (por ej, en r1, hay una 
-#translación en eje X y eje Z al mismo tiempo, para repetir el aspecto del 
-#manipulador 4 del problema, crear un punto intermedio [01A] que solo reciba 
-#una translación en eje X [r1_1A= Quaternion(0,a1,0,0)] para que la conexión
-#de ese punto con el punto 2 sea una translación solo en
-# el eje Z [r1A_2= Quaternion(0,0,0,l1)])
-
+# Se tiene que agregar un punto auxiliar, ya que hay una traslación en dos ejes
+# al mismo tiempo (x, z). El punto agregado es o0P
 
 
 
