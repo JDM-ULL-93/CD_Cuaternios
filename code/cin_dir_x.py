@@ -34,7 +34,7 @@ def ramal(I,prev=[],base=0):
         O.append(prev)
   return O
 
-def show_robot(O,ef=[]):
+def muestra_robot(O,ef=[]):
   # Pinta en 3D
   OR = ramal(O)
   OT = np.array(OR).T
@@ -110,7 +110,19 @@ def temporizador(func):
 
 #pp = int(input('Numero de articulaciones del robot  '))
 #cinDirMatrices(pp)
+def multiplicaMatrix(matrix1,matrix2):
+    I = len(matrix1)
+    J = len(matrix2[0])
+    K = len(matrix2)
+    result = np.zeros((I,J))
 
+    for i in range(I):
+       # iterate through columns of Y
+       for j in range(J):
+           # iterate through rows of Y
+           for k in range(K):
+               result[i][j] += matrix1[i][k] * matrix2[k][j]
+    return result
 
 # Calcula el tiempo de recrear X puntos de X articulaciones con matrices
 @temporizador
@@ -138,14 +150,14 @@ def cinDirMatrices(num):
     multp = TX_Y[0]
     for i in range(0, num-1):
         resultado.append(np.dot(multp, origen))
-        multp = np.dot(multp,TX_Y[i+1]) 
+        multp = multiplicaMatrix(multp,TX_Y[i+1])#np.dot(multp,TX_Y[i+1]) 
     # Mostrar resultado de la cinemática directa
     #muestra_origenes(resultado)
     #muestra_robot   (resultado)
     return
 
 
-nA = [10, 100, 1000, 10000, 100000, 1000000]
+nA = [10, 100, 1000, 10000,100000, 1000000]
 for n in nA:
     cinDirMatrices(n)
 
