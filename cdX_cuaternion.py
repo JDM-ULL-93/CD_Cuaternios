@@ -26,17 +26,30 @@ def cinDirCuaternion(p):
     qX = [Quaternion.VectorRotacional(nX[0],tX[0])] * p
     qXc = [~qX[0]]*p
 
+
+
+    #Sin memorización
+    Ox = [origen]
+    #OxL = [origen.toList()]
+    for i in range(0,p):
+        multp = qX[0]
+        multp_C = qXc[0]
+        for x in range(0,i):
+            multp = multp * qX[i]
+            multp_C = qXc[i] * multp_C
+        Ox.append(multp * rX[i]* multp_C + Ox[-1])
+        #OxL.append(Ox[-1].toList())
    
     #Con memorizaci?n, la complejidad del algoritmo es O(N)
     #La memorizaci?n se aprovecha de la propiedad asociativa de los cuaterniones
-    multp = qX[0] 
-    multp_C = qXc[0]
-    Ox = [multp*rX[0]*multp_C+origen]
+    #multp = qX[0] 
+    #multp_C = qXc[0]
+    #Ox = [multp*rX[0]*multp_C+origen]
     #OxL = [origen.toList(),Ox[0].toList()]
-    for i in range(1,p):
-        multp = multp * qX[i]
-        multp_C = qXc[i] * multp_C 
-        Ox.append(multp * rX[i]* multp_C + Ox[i-1])
+    #for i in range(1,p):
+        #multp = multp * qX[i]
+        #multp_C = qXc[i] * multp_C 
+        #Ox.append(multp * rX[i]* multp_C + Ox[-1])
         #OxL.append(Ox[-1].toList())
     #muestra_robot(OxL)
     return Ox
@@ -44,6 +57,6 @@ def cinDirCuaternion(p):
 #pp = int(input('Numero de articulaciones del robot  '))
 #cinDirCuaternion(pp)
 
-nA = [10000000]#[10, 100, 1000, 10000, 100000, 1000000]
+nA = [10, 100, 1000, 10000, 100000]
 for n in nA:
     cinDirCuaternion(n)

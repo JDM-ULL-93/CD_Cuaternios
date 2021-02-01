@@ -110,7 +110,19 @@ def temporizador(func):
 
 #pp = int(input('Numero de articulaciones del robot  '))
 #cinDirMatrices(pp)
+def multiplicaMatrix(matrix1,matrix2):
+    I = len(matrix1)
+    J = len(matrix2[0])
+    K = len(matrix2)
+    result = np.zeros((I,J))
 
+    for i in range(I):
+       # iterate through columns of Y
+       for j in range(J):
+           # iterate through rows of Y
+           for k in range(K):
+               result[i][j] += matrix1[i][k] * matrix2[k][j]
+    return result
 
 # Calcula el tiempo de recrear X puntos de X articulaciones con matrices
 @temporizador
@@ -127,25 +139,25 @@ def cinDirMatrices(num):
     TX_Y = [matriz_T(d[i], th[i], a[i], al[i]) for i in range(num)] #Donde Y = X-1
     
     #Sin memorización --> O(n^2)
-    #TX_Yalreves = TX_Y[::-1]
-    #resultado = [[0, 0, 0, 1], np.dot(TX_Y[0], origen).tolist()]
-    #for i in range(1,p):
-        #res = reduce(lambda a, b: np.dot(a, b), TX_Yalreves[:i])
-        #resultado.append(np.dot(res, origen).tolist())
+    TX_Yalreves = TX_Y[::-1]
+    resultado = [[0, 0, 0, 1], np.dot(TX_Y[0], origen).tolist()]
+    for i in range(1,num):
+        res = reduce(lambda a, b: multiplicaMatrix(a, b), TX_Yalreves[:i])
+        resultado.append(np.dot(res, origen).tolist())
 
     #Con memorización --> O(n)
-    resultado = [[0, 0, 0, 1]]
-    multp = TX_Y[0]
-    for i in range(0, num-1):
-        resultado.append(np.dot(multp, origen))
-        multp = np.dot(multp,TX_Y[i+1]) 
+    #resultado = [[0, 0, 0, 1]]
+    #multp = TX_Y[0]
+    #for i in range(0, num-1):
+        #resultado.append(np.dot(multp, origen))
+        #multp = multiplicaMatrix(multp,TX_Y[i+1])#np.dot(multp,TX_Y[i+1]) 
     # Mostrar resultado de la cinemática directa
     #muestra_origenes(resultado)
     #muestra_robot   (resultado)
     return
 
 
-nA = [10, 100, 1000, 10000, 100000, 1000000]
+nA = [10, 100, 1000, 10000]
 for n in nA:
     cinDirMatrices(n)
 
