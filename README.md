@@ -29,10 +29,16 @@
 <a name="problem"></a>
 ## 🤔 **Problema** 
 
-Dado un brazo robótico con un conjunto de articulaciones que permiten girar o desplazar diferentes puntos del mismo:
+*Dado un brazo robótico con un conjunto de articulaciones que permiten girar o desplazar diferentes puntos del mismo.*
 
-El problema de la cinemática directa se puede definir como el problema por el cual se pretende conocer las coordenadas cartesianas en el espacio (X,Y,Z) de cada punto que conforman el brazo robótico a partir de un conjunto de parámetros o variables articulares (θ,L,...) pasados como input del problema y que definen los valores de las articulaciones de nuestro brazo robótico.
+![BrazoRobotico](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Brazo Robótico")
 
+
+La **cinemática directa** se puede definir como el problema por el cual se pretende conocer las coordenadas cartesianas en el espacio (X,Y,Z) de cada punto que conforman el brazo robótico a partir de un conjunto de parámetros o variables articulares (θ,L,...) que definen las posiciones y orientaciones de las articulaciones delbrazo robótico. 
+
+Es decir, de forma resumida, la cinemática directa busca convertir un input de variables articulares en un output equivalente de coordenadas cartesianas en el espacio(o en el plano):
+
+**(θ,L,...)** ➡️ **(X,Y,Z)**
 
 <a name="objective"></a>
 ## 🎯 **Objetivo** 
