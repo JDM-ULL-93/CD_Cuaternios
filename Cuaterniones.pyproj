@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{0d629951-fec3-4d9f-af96-1a98bd204a1c}</ProjectGuid>
     <ProjectHome />
-    <StartupFile>cin_dir_x.py</StartupFile>
+    <StartupFile>code/cin_dir_x.py</StartupFile>
     <SearchPath />
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
@@ -22,15 +22,18 @@
     <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="cd1_cuaternion.py" />
-    <Compile Include="cd2_cuaternion.py" />
-    <Compile Include="cd3_cuaternion.py" />
-    <Compile Include="cd4_cuaternion.py" />
-    <Compile Include="cd5_cuaternion.py" />
-    <Compile Include="cdX_cuaternion.py" />
-    <Compile Include="cin_dir_x.py" />
-    <Compile Include="Classes.py" />
-    <Compile Include="Funcs.py" />
+    <Compile Include="code/cd1_cuaternion.py" />
+    <Compile Include="code/cd2_cuaternion.py" />
+    <Compile Include="code/cd3_cuaternion.py" />
+    <Compile Include="code/cd4_cuaternion.py" />
+    <Compile Include="code/cd5_cuaternion.py" />
+    <Compile Include="code/cdX_cuaternion.py" />
+    <Compile Include="code/cin_dir_x.py" />
+    <Compile Include="code/Classes.py" />
+    <!--<Compile Include="code/Funcs.py" />-->
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="code\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
 </Project>

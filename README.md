@@ -29,13 +29,15 @@
 <a name="problem"></a>
 ## 🤔 **Problema** 
 
-Explicar algo de cinemática directa...
+Dado un brazo robótico con un conjunto de articulaciones que permiten girar o desplazar diferentes puntos del mismo:
+
+El problema de la cinemática directa se puede definir como el problema por el cual se pretende conocer las coordenadas cartesianas en el espacio (X,Y,Z) de cada punto que conforman el brazo robótico a partir de un conjunto de parámetros o variables articulares (θ,L,...) pasados como input del problema y que definen los valores de las articulaciones de nuestro brazo robótico.
 
 
 <a name="objective"></a>
 ## 🎯 **Objetivo** 
 
-Cinemática directa con cuaterniones
+Resolver la cinemática directa con cuaterniones.
 
 
 <a name="language"></a>
