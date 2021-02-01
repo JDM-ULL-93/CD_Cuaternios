@@ -35,7 +35,7 @@
 <img src="material/img/brazoRobotico.png">
 </p>
 
-La **cinemática directa** se puede definir como el problema por el cual se pretende conocer las coordenadas cartesianas en el espacio (X,Y,Z) de cada punto que conforman el brazo robótico a partir de un conjunto de parámetros o variables articulares (θ,L,...) que definen las posiciones y orientaciones de las articulaciones delbrazo robótico. 
+La **cinemática directa** se puede definir como el problema por el cual se pretende conocer las coordenadas cartesianas en el espacio (X,Y,Z) de cada punto que conforman el brazo robótico a partir de un conjunto de parámetros o variables articulares (θ,L,...) que definen las posiciones y orientaciones de las articulaciones del brazo robótico. 
 
 Es decir, de forma resumida, la cinemática directa busca convertir un input de variables articulares en un output equivalente de coordenadas cartesianas en el espacio(o en el plano):
 
