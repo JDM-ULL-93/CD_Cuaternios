@@ -156,8 +156,7 @@ def cinDirMatrices(num):
     #muestra_robot   (resultado)
     return
 
-
-nA = [10, 100, 1000, 10000]
+nA = [10, 100, 1000, 10000,100000, 1000000]
 for n in nA:
     cinDirMatrices(n)
 
