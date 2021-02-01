@@ -40,7 +40,7 @@ La **cinemática directa** se puede definir como el problema por el cual se pret
 Es decir, de forma resumida, la cinemática directa busca convertir un input de variables articulares en un output equivalente de coordenadas cartesianas en el espacio(o en el plano):
 
 <p align="center">
-**(θ,L,...)** ➡️ **(X,Y,Z)**
+   <b>(θ,L,...)</b> ➡️ <b>(X,Y,Z)</b>
 </p>
 
 
