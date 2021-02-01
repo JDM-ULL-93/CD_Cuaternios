@@ -31,8 +31,9 @@
 
 *Dado un brazo robótico con un conjunto de articulaciones que permiten girar o desplazar diferentes puntos del mismo.*
 
-![BrazoRobotico](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Brazo Robótico")
-
+<p align="center">
+<img src="material/img/brazoRobotico.png">
+</p>
 
 La **cinemática directa** se puede definir como el problema por el cual se pretende conocer las coordenadas cartesianas en el espacio (X,Y,Z) de cada punto que conforman el brazo robótico a partir de un conjunto de parámetros o variables articulares (θ,L,...) que definen las posiciones y orientaciones de las articulaciones delbrazo robótico. 
 
