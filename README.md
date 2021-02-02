@@ -22,6 +22,7 @@
 ## 📁 **Directorios** 
 
 * code ➡️ Códigó fuente
+* material ➡️ Material utilizado
 * report ➡️ Informe 
 * slides ➡️ Presentación
 
