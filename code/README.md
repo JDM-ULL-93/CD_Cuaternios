@@ -12,7 +12,7 @@ En este directorio se encuentra el código fuente
 
 Hay varios tipos de ficheros, los cuales están diferenciados por el formato de su nombre.
 
-* **cd<número>_cuaternion.py** corresponden a cada uno de los ejecicios resueltos en clases de prácticas con el método que usa matrices de Denavit-Hartenberg, pero en este caso son resueltos con cuaterniones.
+* **cd<número>_cuaternion.py** corresponden a cada uno de los ejecicios resueltos en clases de prácticas utilizando matrices, que se conoce como Denavit-Hartenberg, pero en este caso son resueltos con cuaterniones.
 
 * **cdX_cuaternion.py** y **cin_dir_x.py** corresponden a la resolución de la cinemática directa con cuaterniones y matrices respectivamente, pero a una escala mucho mayor y solo centrada en la cantidad de operaciones, lo que nos permite hacer las comparaciones entre ambos métodos.
 
